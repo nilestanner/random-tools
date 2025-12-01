@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PNG to JPG Converter</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #preview { max-width: 300px; margin-top: 10px; }
+        #download { margin-top: 15px; display: none; }
+    </style>
+</head>
+<body>
+
+<h2>PNG to JPG Converter</h2>
+
+<input type="file" id="fileInput" accept="image/png"><br>
+<img id="preview" />
+
+<a id="download" download="converted.jpg">Download JPG</a>
+
+<script>
+document.getElementById('fileInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const img = new Image();
+    img.src = URL.createObjectURL(file);
+
+    img.onload = () => {
+        document.getElementById('preview').src = img.src;
+
+        // Create a canvas
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+
+        // Fill background white (important for PNG transparency)
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw image
+        ctx.drawImage(img, 0, 0);
+
+        // Convert to JPG
+        const jpgUrl = canvas.toDataURL("image/jpeg", 0.9); // quality = 0.9
+
+        // Prepare download link
+        const downloadLink = document.getElementById('download');
+        downloadLink.href = jpgUrl;
+        downloadLink.style.display = "inline-block";
+        downloadLink.textContent = "Download JPG";
+    };
+});
+</script>
+
+</body>
+</html>
