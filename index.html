@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Tool Directory</title>
+    <style>
+        /* Simple styling for better readability */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .tool-entry {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .tool-entry h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .tool-entry a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .tool-entry a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Tool Directory</h1>
+
+    <div id="tool-directory-container">
+        </div>
+
+    <script>
+        // --- 1. CONFIGURATION ARRAY (EASY TO EDIT) ---
+        // You only need to edit this array to add, remove, or change tools.
+        // The 'directory' will be prepended with the base URL automatically.
+        const toolData = [
+            {
+                name: "png2jpg",
+                directory: "png2jpg", 
+                description: "Convert PNG images to JPG format."
+            },
+            // Add more entries here
+        ];
+
+        // --- 2. BASE URL SETTING ---
+        // This is the common part of your links. Replace with your actual website base URL.
+        const baseURL = "https://nilestanner.github.io/random-tools/";
+
+
+        // --- 3. GENERATION FUNCTION ---
+        function generateToolDirectory() {
+            const container = document.getElementById('tool-directory-container');
+            let htmlContent = '';
+
+            // Iterate over each object in the toolData array
+            toolData.forEach(tool => {
+                // Construct the full URL by combining the base URL and the directory
+                const fullLink = baseURL + tool.directory + "/";
+
+                // Create the HTML structure for one tool entry
+                htmlContent += `
+                    <div class="tool-entry">
+                        <h3><a href="${fullLink}" target="_blank">${tool.name}</a></h3>
+                        <p>
+                            ${tool.description}
+                        </p>
+                        <p>
+                            <strong>Link:</strong> <a href="${fullLink}" target="_blank">${fullLink}</a>
+                        </p>
+                    </div>
+                `;
+            });
+
+            // Insert the generated HTML into the container on the page
+            container.innerHTML = htmlContent;
+        }
+
+        // Run the function when the page loads
+        generateToolDirectory();
+    </script>
+
+</body>
+</html>
